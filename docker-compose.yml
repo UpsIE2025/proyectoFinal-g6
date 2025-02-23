@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   kafka:
     image: apache/kafka:latest
@@ -9,7 +11,7 @@ services:
       KAFKA_NODE_ID: 1
       KAFKA_PROCESS_ROLES: broker,controller
       KAFKA_LISTENERS: PLAINTEXT://:9092,CONTROLLER://localhost:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@localhost:9093
@@ -19,10 +21,36 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_NUM_PARTITIONS: 3
     networks:
-      - default
-      
+      - kafka-network
+
+  kafka-productor:
+    build: 
+      context: ./kafka-productor
+      dockerfile: Dockerfile
+    container_name: kafka-productor
+    depends_on:
+      - kafka
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    ports:
+      - "8090:8090"
+    networks:
+      - kafka-network
+
+  kafka-consumer:
+    build: 
+      context: ./kafka-consumer
+      dockerfile: Dockerfile
+    container_name: kafka-consumer
+    depends_on:
+      - kafka
+    environment:
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    ports:
+      - "8070:8070"
+    networks:
+      - kafka-network
+
 networks:
-  default:
+  kafka-network:
     driver: bridge
-    driver_opts:
-      com.docker.network.enable_ipv6: "false"
