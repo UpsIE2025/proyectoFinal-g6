@@ -1,4 +1,4 @@
-package ec.ups.ms.kafka;
+package ec.ups.ms.kafka.service;
 
 import ec.ups.ms.kafka.entities.Estudiante;
 import org.springframework.kafka.core.KafkaTemplate;
