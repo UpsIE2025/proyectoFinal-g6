@@ -1,8 +1,12 @@
-package ec.ups.ms.kafka;
+package ec.ups.ms.kafka.controller;
 
+import ec.ups.ms.kafka.service.KafkaProducerService;
 import ec.ups.ms.kafka.entities.Estudiante;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 @RestController
@@ -17,9 +21,13 @@ public class KafkaController {
     }
 
     @PostMapping("/send")
-    public ResponseEntity<String> sendMessage(@RequestBody Estudiante estudiante) {
+    public ResponseEntity<Map<String, Object>> sendMessage(@RequestBody Estudiante estudiante) {
         producerService.sendMessage(topic, estudiante);
-        return ResponseEntity.ok("Mensaje enviado a Kafka con éxito.");
+        // Crear el JSON de respuesta
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("message", "Mensaje enviado a Kafka con éxito.");
+        return ResponseEntity.ok(response);
     }
 }
 
