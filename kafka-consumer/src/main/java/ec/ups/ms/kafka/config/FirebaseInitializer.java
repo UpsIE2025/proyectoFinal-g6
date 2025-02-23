@@ -1,4 +1,4 @@
-package ec.ups.ms.kafka;
+package ec.ups.ms.kafka.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
