@@ -1,0 +1,24 @@
+type Estudiante {
+  Codigo: ID!
+  Estado: String!
+  Nombres: String!
+  Apellidos: String!
+  Direccion: String!
+  Cursos: [Curso]
+}
+
+type Curso {
+  Codigo: ID!
+  Estado: String!
+  Nombre: String!
+  Estudiantes: [Estudiante]
+}
+
+type Query {
+  estudiante(Codigo: ID!): Estudiante
+  estudiantes: [Estudiante]
+  curso(Codigo: ID!): Curso
+  cursos: [Curso]
+  cursosPorEstudiante(Codigo_Estudiante: ID!): [Curso]
+  estudiantesPorCurso(Codigo_Curso: ID!): [Estudiante]
+}
