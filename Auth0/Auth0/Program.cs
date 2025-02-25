@@ -54,6 +54,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT") ?? "8081";
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, int.Parse(port));
+});
 
 builder.Services.AddHttpClient();
 var app = builder.Build();
