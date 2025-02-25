@@ -1,0 +1,43 @@
+# Build artifacts
+bin/
+obj/
+
+# Visual Studio files
+.vscode/
+.vs/
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Temporary files
+*.tmp
+*.log
+
+# Environment files
+.env
+
+# Dependency cache
+packages/
+
+# Resharper and Rider
+*.sln.iml
+.idea/
+*.DotSettings.user
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Docker
+**/[Dd]ockerfile
+**/docker-compose.*
+
+# OS-specific
+Thumbs.db
+.DS_Store
+
+# Secrets (if any)
+secrets.json
