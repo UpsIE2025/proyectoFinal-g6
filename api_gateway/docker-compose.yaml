@@ -5,10 +5,10 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DB_HOST: tu_host # Reemplaza con la IP o host de tu PostgreSQL
-      DB_USER: tu_usuario # Reemplaza con tu usuario de PostgreSQL
-      DB_PASSWORD: tu_contraseña # Reemplaza con tu contraseña de PostgreSQL
-      DB_NAME: tu_base_de_datos # Reemplaza con el nombre de tu base de datos
+      DB_HOST: 209.94.59.49
+      DB_USER: admindatabase
+      DB_PASSWORD: admindatabase
+      DB_NAME: mydatabase
     networks:
       - api-network
 
