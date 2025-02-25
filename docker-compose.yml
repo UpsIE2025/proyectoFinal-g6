@@ -1,6 +1,31 @@
 version: '3.8'
 
 services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: admindatabase
+      POSTGRES_PASSWORD: admindatabase
+      POSTGRES_DB: mydatabase
+    ports:
+      - "5432:5432"  
+    restart: always
+    networks:
+      - my-network
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin
+      MYSQL_DATABASE: mydatabase
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - my-network
   kafka:
     image: apache/kafka:latest
     container_name: broker
@@ -21,7 +46,7 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
       KAFKA_NUM_PARTITIONS: 3
     networks:
-      - kafka-network
+      - my-network
 
   kafka-productor:
     build: 
@@ -35,7 +60,7 @@ services:
     ports:
       - "8090:8090"
     networks:
-      - kafka-network
+      - my-network
 
   kafka-consumer:
     build: 
@@ -49,8 +74,8 @@ services:
     ports:
       - "8070:8070"
     networks:
-      - kafka-network
+      - my-network
 
 networks:
-  kafka-network:
+  my-network:
     driver: bridge
