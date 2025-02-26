@@ -27,7 +27,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
 
-    // Configuración para soportar JWT Bearer
+    // Configuraciï¿½n para soportar JWT Bearer
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -54,6 +54,12 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT") ?? "8081";
+
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Listen(IPAddress.Any, int.Parse(port));
+});
 
 builder.Services.AddHttpClient();
 var app = builder.Build();

@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  api-gateway:
+    build: ./gateway
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: 209.94.59.49
+      DB_USER: admindatabase
+      DB_PASSWORD: admindatabase
+      DB_NAME: mydatabase
+    networks:
+      - api-network
+
+networks:
+  api-network:
+    driver: bridge
