@@ -1,7 +1,5 @@
 ﻿using Grpc.Core;
-using GrpcService.Models;
 using GrpcService.Repositories;
-using Microsoft.EntityFrameworkCore;
 
 namespace GrpcService.Services
 {
@@ -19,9 +17,9 @@ namespace GrpcService.Services
             {
                 Id = sc.Id,
                 EstudianteId = sc.EstudianteId,
-                EstudianteNombre = $"{sc.Estudiante.Nombre} {sc.Estudiante.Apellido}", // Asume que tienes propiedades Nombre y Apellido en Estudiante
+                EstudianteNombre = $"{sc.Estudiante.Nombre} {sc.Estudiante.Apellido}",
                 CursoId = sc.CursoId,
-                CursoNombre = sc.Curso.Nombre,  // Asume que tienes una propiedad Nombre en Curso
+                CursoNombre = sc.Curso.Nombre,
                 Estado = sc.Estado
             }).ToList();
 

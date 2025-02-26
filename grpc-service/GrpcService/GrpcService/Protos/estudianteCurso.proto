@@ -12,8 +12,6 @@ service StudentCourseService {
   rpc DeleteStudentCourse (DeleteStudentCourseRequest) returns (StudentCourse);
 }
 
-// Mensajes para las solicitudes y respuestas
-
 message Empty {
 }
 
@@ -43,8 +41,6 @@ message DeleteStudentCourseRequest {
   int32 id = 1;
 }
 
-
-// Mensaje para representar un StudentCourse
 message StudentCourse {
   int32 id = 1;
   int32 estudiante_id = 2;

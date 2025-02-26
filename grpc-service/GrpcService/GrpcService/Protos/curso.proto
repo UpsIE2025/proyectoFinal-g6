@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package courseGrpc;
+
+service CourseService {
+  rpc GetCourses (Empty) returns (GetCoursesResponse);
+  rpc GetCourse (GetCourseRequest) returns (Course);
+  rpc CreateCourse (CreateCourseRequest) returns (Course);
+  rpc UpdateCourse (UpdateCourseRequest) returns (Course);
+  rpc DeleteCourse (DeleteCourseRequest) returns (Course);
+}
+
+message Empty {
+}
+
+message GetCoursesRequest {}
+
+message GetCoursesResponse {
+  repeated Course courses = 1;
+}
+
+message GetCourseRequest {
+  int32 id = 1;
+}
+
+message CreateCourseRequest {
+  string nombre = 1;
+}
+
+message UpdateCourseRequest {
+  int32 id = 1;
+  string nombre = 2;
+  bool estado = 3;
+}
+
+message DeleteCourseRequest {
+  int32 id = 1;
+}
+
+message DeleteCourseResponse {
+  bool success = 1;
+}
+
+message Course {
+  int32 id = 1;
+  string nombre = 2;
+  bool estado = 3;
+}
