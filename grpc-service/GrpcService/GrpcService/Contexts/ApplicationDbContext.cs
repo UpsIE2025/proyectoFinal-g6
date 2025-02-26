@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GrpcService.Contexts;
 
-public partial class MydatabaseContext : DbContext
+public partial class ApplicationDbContext : DbContext
 {
-    public MydatabaseContext()
+    public ApplicationDbContext()
     {
     }
 
-    public MydatabaseContext(DbContextOptions<MydatabaseContext> options)
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
@@ -18,7 +18,7 @@ public partial class MydatabaseContext : DbContext
 
     public virtual DbSet<Estudiante> Estudiantes { get; set; }
 
-    public virtual DbSet<EstudianteCurso> EstudianteCursos { get; set; }
+    public virtual DbSet<Models.EstudianteCurso> EstudianteCursos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

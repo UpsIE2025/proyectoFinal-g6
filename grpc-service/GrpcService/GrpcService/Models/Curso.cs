@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GrpcService.Models;
+﻿namespace GrpcService.Models;
 
 public partial class Curso
 {
@@ -11,5 +8,5 @@ public partial class Curso
 
     public bool Estado { get; set; }
 
-    public virtual ICollection<EstudianteCurso> EstudianteCursos { get; set; } = new List<EstudianteCurso>();
+    public virtual ICollection<EstudianteCurso> EstudianteCursos { get; set; } = [];
 }

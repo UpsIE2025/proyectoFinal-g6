@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GrpcService.Models;
+﻿namespace GrpcService.Models;
 
 public partial class EstudianteCurso
 {
@@ -12,6 +9,10 @@ public partial class EstudianteCurso
     public int CursoId { get; set; }
 
     public bool Estado { get; set; }
+
+    public virtual string? EstudianteNombre { get; set; }
+
+    public virtual string? CursoNombre { get; set; }
 
     public virtual Curso Curso { get; set; } = null!;
 

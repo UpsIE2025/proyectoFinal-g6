@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace GrpcService.Models;
+﻿namespace GrpcService.Models;
 
 public partial class Estudiante
 {
