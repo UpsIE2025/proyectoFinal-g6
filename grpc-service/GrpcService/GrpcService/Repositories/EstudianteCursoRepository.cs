@@ -44,7 +44,7 @@ namespace GrpcService.Repositories
         public async Task<EstudianteCurso> CreateStudentCourse(int estudianteId, int cursoId)
         {
             // Check if the student and course exist
-            var estudiante = await _context.EstudianteCursos.FindAsync(estudianteId);
+            var estudiante = await _context.Estudiantes.FindAsync(estudianteId);
 
             if (estudiante == null)
             {
@@ -58,6 +58,12 @@ namespace GrpcService.Repositories
                 throw new RpcException(new Status(StatusCode.NotFound, "Course not found"));
             }
 
+            var cursoEliminar = await _context.EstudianteCursos.FirstOrDefaultAsync(e => e.EstudianteId == estudianteId && e.Estado);
+            if (cursoEliminar != null)
+            {
+                await DeleteStudentCourse(cursoEliminar.Id);
+            }
+
             var studentCourse = new EstudianteCurso
             {
                 EstudianteId = estudianteId,
@@ -67,7 +73,7 @@ namespace GrpcService.Repositories
 
             _context.EstudianteCursos.Add(studentCourse);
             await _context.SaveChangesAsync();
-
+            
             return studentCourse;
         }
 
@@ -76,9 +82,7 @@ namespace GrpcService.Repositories
             var cursoEliminar = await _context.EstudianteCursos.FindAsync(estudianteCurso.EstudianteId);
             if (cursoEliminar != null)
             {
-                cursoEliminar.Estado = false;
-                _context.EstudianteCursos.Update(cursoEliminar);
-                await _context.SaveChangesAsync();
+                await DeleteStudentCourse(cursoEliminar.Id);
             }
 
 
@@ -101,7 +105,7 @@ namespace GrpcService.Repositories
             }
 
             estudianteCurso.Estado = false;
-            _context.Entry(estudianteCurso).State = EntityState.Modified;
+            _context.Update(estudianteCurso);
 
             await _context.SaveChangesAsync();
 
