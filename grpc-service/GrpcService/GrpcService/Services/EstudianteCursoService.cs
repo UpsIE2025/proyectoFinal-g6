@@ -85,9 +85,7 @@ namespace GrpcService.Services
             {
                 Id = estudianteCurso.Id,
                 EstudianteId = estudianteCurso.EstudianteId,
-                EstudianteNombre = $"{estudianteCurso.Estudiante.Nombre} {estudianteCurso.Estudiante.Apellido}",
                 CursoId = estudianteCurso.CursoId,
-                CursoNombre = estudianteCurso.Curso.Nombre,
                 Estado = estudianteCurso.Estado
             };
         }
