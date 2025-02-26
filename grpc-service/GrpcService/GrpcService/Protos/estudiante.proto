@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package studentGrpc;
+
+service StudentService {
+  rpc GetStudents (Empty) returns (GetStudentsResponse);
+  rpc GetStudent (GetStudentRequest) returns (Student);
+  rpc CreateStudent (CreateStudentRequest) returns (Student);
+  rpc UpdateStudent (UpdateStudentRequest) returns (Student);
+  rpc DeleteStudent (DeleteStudentRequest) returns (Student);
+}
+
+message Empty {}
+
+message GetStudentsResponse {
+  repeated Student students = 1;
+}
+
+message GetStudentRequest {
+  int32 id = 1;
+}
+
+message CreateStudentRequest {
+  string nombre = 1;
+  string apellido = 2;
+  string direccion = 3;
+}
+
+message UpdateStudentRequest {
+  int32 id = 1;
+  string nombre = 2;
+  string apellido = 3;
+  string direccion = 4;
+  bool estado = 5;
+}
+
+message DeleteStudentRequest {
+  int32 id = 1;
+}
+
+message Student {
+  int32 id = 1;
+  string nombre = 2;
+  string apellido = 3;
+  string direccion = 4;
+  bool estado = 5;
+}

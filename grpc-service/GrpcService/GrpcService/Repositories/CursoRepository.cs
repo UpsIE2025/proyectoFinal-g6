@@ -40,13 +40,13 @@ namespace GrpcService.Repositories
             return curso;
         }
 
-        public async Task<Curso> UpdateCurso(string nombre, bool estado)
+        public async Task<Curso> UpdateCurso(int id, string nombre, bool estado)
         {
-            Curso curso = new()
-            {
-                Estado = estado,
-                Nombre = nombre
-            };
+            var curso = await GetCurso(id);
+
+            curso.Estado = estado;
+            curso.Nombre = nombre;
+            curso.Estado = estado;
 
             _context.Update(curso);
             await _context.SaveChangesAsync();
