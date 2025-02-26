@@ -11,18 +11,21 @@ namespace GrpcService.Services
 
         public override async Task<GetStudentCoursesResponse> GetStudentCourses(Empty request, ServerCallContext context)
         {
-            var studentCourses = await _estudianteCursoRepository.GetStudentCourses();
+            var estudianteCurso = await _estudianteCursoRepository.GetStudentCourses();
 
             var response = new GetStudentCoursesResponse();
-            response.StudentCourses.AddRange((IEnumerable<StudentCourse>)studentCourses.Select(sc => new EstudianteCurso
+
+            IEnumerable<GrpcService.StudentCourse> studentCourses = estudianteCurso.Select(sc => new GrpcService.StudentCourse
             {
                 Id = sc.Id,
                 EstudianteId = sc.EstudianteId,
-                EstudianteNombre = $"{sc.Estudiante.Nombre} {sc.Estudiante.Apellido}",
+                EstudianteNombre = $"{sc.Estudiante.Nombre} {sc.Estudiante.Apellido}", // Asume que tienes propiedades Nombre y Apellido en Estudiante
                 CursoId = sc.CursoId,
-                CursoNombre = sc.Curso.Nombre,
+                CursoNombre = sc.Curso.Nombre,  // Asume que tienes una propiedad Nombre en Curso
                 Estado = sc.Estado
-            }));
+            }).ToList();
+
+            response.StudentCourses.AddRange(studentCourses);
 
             return response;
         }

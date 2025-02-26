@@ -1,4 +1,5 @@
 using GrpcService.Contexts;
+using GrpcService.Repositories;
 using GrpcService.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,9 @@ var connectionString = builder.Configuration.GetConnectionString("PostgresConnec
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+builder.Services.AddScoped<IEstudianteCursoRepository, EstudianteCursoRepository>();
+builder.Services.AddScoped<EstudianteCursoService>();
 
 var app = builder.Build();
 

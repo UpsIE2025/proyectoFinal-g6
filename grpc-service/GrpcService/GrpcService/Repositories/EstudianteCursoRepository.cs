@@ -19,6 +19,7 @@ namespace GrpcService.Repositories
             List<EstudianteCurso> estudiantesCursos = await _context.EstudianteCursos
                 .Include(sc => sc.Estudiante)
                 .Include(sc => sc.Curso)
+                .Where(ec => ec.Estado)
                 .ToListAsync();
 
             return estudiantesCursos;
