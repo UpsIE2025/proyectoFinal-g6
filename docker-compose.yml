@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   postgres:
@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: admindatabase
       POSTGRES_DB: mydatabase
     ports:
-      - "5432:5432"  
+      - "5432:5432"
     restart: always
     networks:
       - my-network
@@ -49,7 +49,7 @@ services:
       - my-network
 
   kafka-productor:
-    build: 
+    build:
       context: ./kafka-productor
       dockerfile: Dockerfile
     container_name: kafka-productor
@@ -63,7 +63,7 @@ services:
       - my-network
 
   kafka-consumer:
-    build: 
+    build:
       context: ./kafka-consumer
       dockerfile: Dockerfile
     container_name: kafka-consumer
@@ -75,6 +75,18 @@ services:
       - "8070:8070"
     networks:
       - my-network
+
+  api-gateway:
+    build: ./gateway
+    ports:
+      - "4000:4000"
+    environment:
+      DB_HOST: 209.94.59.49
+      DB_USER: admindatabase
+      DB_PASSWORD: admindatabase
+      DB_NAME: mydatabase
+    networks:
+      - api-network
 
 networks:
   my-network:
