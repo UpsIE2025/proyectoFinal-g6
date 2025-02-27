@@ -9,7 +9,7 @@ import { join } from 'path';
         name: 'COURSE_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'grpc_server:50051',
+          url: process.env.GRPC_COURSE_URL || 'localhost:50051',
           package: 'courseGrpc',
           protoPath: join(__dirname, 'curso.proto'),
         },
@@ -18,7 +18,7 @@ import { join } from 'path';
         name: 'STUDENT_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'grpc_server:50051',
+          url: process.env.GRPC_STUDENT_URL || 'localhost:50051',
           package: 'studentGrpc',
           protoPath: join(__dirname, 'estudiante.proto'),
         },
@@ -27,7 +27,7 @@ import { join } from 'path';
         name: 'STUDENT_COURSE_PACKAGE',
         transport: Transport.GRPC,
         options: {
-          url: 'grpc_server:50051',
+          url: process.env.GRPC_STUDENT_COURSE_URL || 'localhost:50051',
           package: 'cursoEstudianteGrpc',
           protoPath: join(__dirname, 'estudianteCurso.proto'),
         },
