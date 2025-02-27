@@ -5,7 +5,8 @@ import { Observable } from 'rxjs';
 interface Student {
   id: number;
   nombre: string;
-  edad: number;
+  apellido: string;
+  direccion: string;
   estado: boolean;
 }
 

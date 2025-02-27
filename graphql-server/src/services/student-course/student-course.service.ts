@@ -4,9 +4,11 @@ import { Observable } from 'rxjs';
 
 interface StudentCourse {
   id: number;
-  estudianteId: number;
-  cursoId: number;
-  fechaInscripcion: string;
+  estudiante_id: number;
+  estudiante_nombre: string;
+  curso_id: number;
+  curso_nombre: string;
+  estado: boolean;
 }
 
 @Injectable()

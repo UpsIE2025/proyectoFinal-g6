@@ -34,6 +34,6 @@ import { join } from 'path';
       },
     ]),
   ],
-  exports: ['COURSE_PACKAGE', 'STUDENT_PACKAGE', 'STUDENT_COURSE_PACKAGE'],
+  exports: [ClientsModule],
 })
 export class GrpcClientModule {}
