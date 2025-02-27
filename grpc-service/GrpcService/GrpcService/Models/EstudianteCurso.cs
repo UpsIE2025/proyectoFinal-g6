@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GrpcService.Models;
 
@@ -12,6 +11,12 @@ public partial class EstudianteCurso
     public int CursoId { get; set; }
 
     public bool Estado { get; set; }
+
+    [NotMapped]
+    public virtual string? EstudianteNombre { get; set; }
+
+    [NotMapped]
+    public virtual string? CursoNombre { get; set; }
 
     public virtual Curso Curso { get; set; } = null!;
 

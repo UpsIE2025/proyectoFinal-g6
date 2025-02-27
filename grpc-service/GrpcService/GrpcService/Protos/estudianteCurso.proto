@@ -1,0 +1,55 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcService";
+
+package cursoEstudianteGrpc;
+
+service StudentCourseService {
+  rpc GetStudentCourses (Empty) returns (GetStudentCoursesResponse);
+  rpc GetStudentCourse (StudentCourseRequest) returns (StudentCourse);
+  rpc CreateStudentCourse (CreateStudentCourseRequest) returns (StudentCourse);
+  rpc UpdateStudentCourse (UpdateStudentCourseRequest) returns (StudentCourse);
+  rpc DeleteStudentCourse (DeleteStudentCourseRequest) returns (StudentCourse);
+}
+
+// Mensajes para las solicitudes y respuestas
+
+message Empty {
+}
+
+message GetStudentCoursesRequest {
+  int32 estudiante_id = 1;
+}
+
+message GetStudentCoursesResponse {
+  repeated StudentCourse student_courses = 1;
+}
+
+message StudentCourseRequest {
+  int32 id = 1;
+}
+
+message CreateStudentCourseRequest {
+  int32 estudiante_id = 1;
+  int32 curso_id = 2;
+}
+
+message UpdateStudentCourseRequest {
+  int32 EstudianteId = 1;
+  int32 curso_id = 2;
+}
+
+message DeleteStudentCourseRequest {
+  int32 id = 1;
+}
+
+
+// Mensaje para representar un StudentCourse
+message StudentCourse {
+  int32 id = 1;
+  int32 estudiante_id = 2;
+  string estudiante_nombre = 3;
+  int32 curso_id = 4;
+  string curso_nombre = 5;
+  bool estado = 6;
+}
