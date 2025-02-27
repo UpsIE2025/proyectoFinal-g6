@@ -7,7 +7,7 @@ namespace GrpcService.Services
     {
         private readonly IEstudianteCursoRepository _estudianteCursoRepository = estudianteCursoRepository;
 
-        public override async Task<GetStudentCoursesResponse> GetStudentCourses(Empty request, ServerCallContext context)
+        public override async Task<GetStudentCoursesResponse> GetStudentCourses(EmptyStudentCourseRequest request, ServerCallContext context)
         {
             var estudianteCurso = await _estudianteCursoRepository.GetStudentCourses();
 

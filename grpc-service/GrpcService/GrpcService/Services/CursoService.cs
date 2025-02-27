@@ -7,7 +7,7 @@ namespace GrpcService.Services
     {
         private readonly ICursoRepository _cursoRepository = cursoRepository;
 
-        public override async Task<GetCoursesResponse> GetCourses(Empty request, ServerCallContext context)
+        public override async Task<GetCoursesResponse> GetCourses(EmptyCourseRequest request, ServerCallContext context)
         {
             var cursos = await _cursoRepository.GetCursos();
 
@@ -48,7 +48,7 @@ namespace GrpcService.Services
 
         public override async Task<Course> UpdateCourse(UpdateCourseRequest request, ServerCallContext context)
         {
-            var curso = await _cursoRepository.UpdateCurso(request.Nombre, request.Estado);
+            var curso = await _cursoRepository.UpdateCurso(request.Id,request.Nombre, request.Estado);
 
             return new Course
             {

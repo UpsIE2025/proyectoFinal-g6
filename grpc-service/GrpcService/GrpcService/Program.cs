@@ -18,10 +18,14 @@ builder.Services.AddScoped<EstudianteCursoService>();
 builder.Services.AddScoped<ICursoRepository, CursoRepository>();
 builder.Services.AddScoped<CursoService>();
 
+builder.Services.AddScoped<IEstudianteRepository, EstudianteRepository>();
+builder.Services.AddScoped<EstudianteService>();
+
 var app = builder.Build();
 
 app.MapGrpcService<EstudianteCursoService>();
 app.MapGrpcService<CursoService>();
+app.MapGrpcService<EstudianteService>();
 app.MapGet("/", () => "Bienvenido a mi servicio gRPC. Proyecto final de 'Patrones de integración Empresarial'");
 
 app.Run();

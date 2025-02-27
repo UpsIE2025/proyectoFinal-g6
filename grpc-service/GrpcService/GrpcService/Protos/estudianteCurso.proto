@@ -5,14 +5,14 @@ option csharp_namespace = "GrpcService";
 package cursoEstudianteGrpc;
 
 service StudentCourseService {
-  rpc GetStudentCourses (Empty) returns (GetStudentCoursesResponse);
+  rpc GetStudentCourses (EmptyStudentCourseRequest) returns (GetStudentCoursesResponse);
   rpc GetStudentCourse (StudentCourseRequest) returns (StudentCourse);
   rpc CreateStudentCourse (CreateStudentCourseRequest) returns (StudentCourse);
   rpc UpdateStudentCourse (UpdateStudentCourseRequest) returns (StudentCourse);
   rpc DeleteStudentCourse (DeleteStudentCourseRequest) returns (StudentCourse);
 }
 
-message Empty {
+message EmptyStudentCourseRequest {
 }
 
 message GetStudentCoursesRequest {
