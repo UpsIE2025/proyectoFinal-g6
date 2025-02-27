@@ -1,0 +1,32 @@
+version: '3.8'
+
+services:
+  graphql-server:
+    build: .
+    container_name: graphql-server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GRPC_COURSE_URL=grpc-server:50051
+      - GRPC_STUDENT_URL=grpc-server:50051
+      - GRPC_STUDENT_COURSE_URL=grpc-server:50051
+    depends_on:
+      - grpc-server
+    networks:
+      - app-network
+    volumes:
+      - .env:/app/.env
+
+  grpc-server:
+    image: my-grpc-server-image
+    container_name: grpc-server
+    restart: always
+    ports:
+      - "50051:50051"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
