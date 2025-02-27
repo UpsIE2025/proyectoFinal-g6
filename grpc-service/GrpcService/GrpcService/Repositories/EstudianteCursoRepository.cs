@@ -43,7 +43,6 @@ namespace GrpcService.Repositories
 
         public async Task<EstudianteCurso> CreateStudentCourse(int estudianteId, int cursoId)
         {
-            // Check if the student and course exist
             var estudiante = await _context.Estudiantes.FindAsync(estudianteId);
 
             if (estudiante == null)

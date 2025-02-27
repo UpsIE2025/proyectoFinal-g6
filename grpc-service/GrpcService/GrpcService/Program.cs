@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
 builder.Services.AddGrpc();
 
 var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
@@ -16,9 +15,17 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<IEstudianteCursoRepository, EstudianteCursoRepository>();
 builder.Services.AddScoped<EstudianteCursoService>();
 
+builder.Services.AddScoped<ICursoRepository, CursoRepository>();
+builder.Services.AddScoped<CursoService>();
+
+builder.Services.AddScoped<IEstudianteRepository, EstudianteRepository>();
+builder.Services.AddScoped<EstudianteService>();
+
 var app = builder.Build();
 
 app.MapGrpcService<EstudianteCursoService>();
+app.MapGrpcService<CursoService>();
+app.MapGrpcService<EstudianteService>();
 app.MapGet("/", () => "Bienvenido a mi servicio gRPC. Proyecto final de 'Patrones de integración Empresarial'");
 
 app.Run();
