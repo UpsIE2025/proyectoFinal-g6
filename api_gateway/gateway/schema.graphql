@@ -22,3 +22,36 @@ type Query {
   cursosPorEstudiante(Codigo_Estudiante: ID!): [Curso]
   estudiantesPorCurso(Codigo_Curso: ID!): [Estudiante]
 }
+
+type Mutation {
+  crearEstudiante(
+    Estado: String!
+    Nombres: String!
+    Apellidos: String!
+    Direccion: String!
+  ): Estudiante
+  actualizarEstudiante(
+    Codigo: ID!
+    Estado: String
+    Nombres: String
+    Apellidos: String
+    Direccion: String
+  ): Estudiante
+  eliminarEstudiante(Codigo: ID!): Estudiante
+  crearCurso(Estado: String!, Nombre: String!): Curso
+  actualizarCurso(Codigo: ID!, Estado: String, Nombre: String): Curso
+  eliminarCurso(Codigo: ID!): Curso
+  matricularEstudiante(
+    Codigo_Estudiante: ID!
+    Codigo_Curso: ID!
+  ): Estudiante_Curso
+  desmatricularEstudiante(
+    Codigo_Estudiante: ID!
+    Codigo_Curso: ID!
+  ): Estudiante_Curso
+}
+
+type Estudiante_Curso {
+  Codigo_Estudiante: ID!
+  Codigo_Curso: ID!
+}

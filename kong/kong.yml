@@ -1,0 +1,9 @@
+_format_version: "2.1"
+services:
+  - name: kafka-productor
+    url: http://kafka-productor:8090
+    routes:
+      - name: kafka-productor-route
+        paths:
+          - /api/kafka
+        strip_path: false

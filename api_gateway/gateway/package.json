@@ -9,6 +9,7 @@
     "api-gateway": "file:",
     "apollo-server": "^3.0.0",
     "graphql": "^16.0.0",
+    "graphql-tag": "^2.12.6",
     "pg": "^8.7.0"
   }
 }
