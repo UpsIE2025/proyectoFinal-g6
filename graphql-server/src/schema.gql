@@ -1,0 +1,35 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Course {
+  id: ID!
+  nombre: String!
+  estado: Boolean!
+}
+
+type Student {
+  id: ID!
+  nombre: String!
+  apellido: String!
+  direccion: String!
+  estado: Boolean!
+}
+
+type StudentCourse {
+  id: ID!
+  estudiante_id: Float!
+  estudiante_nombre: String!
+  curso_id: Float!
+  curso_nombre: String!
+  estado: Boolean!
+}
+
+type Query {
+  getCourses: [Course!]!
+  getCourse(id: Float!): Course
+  getStudents: [Student!]!
+  getStudent(id: Float!): Student
+  getStudentCourses: [StudentCourse!]!
+  getStudentCourse(id: Float!): StudentCourse
+}
