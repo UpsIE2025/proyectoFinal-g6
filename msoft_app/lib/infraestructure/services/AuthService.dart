@@ -17,11 +17,10 @@ class AuthService {
   Future<void> loginWithCredentials(String email, String password) async {
     try {
       final result = await _auth0.api.login(
-        usernameOrEmail: email,
-        password: password,
-        connectionOrRealm: 'Username-Password-Authentication',
-      );
-
+          usernameOrEmail: email,
+          password: password,
+          connectionOrRealm: 'Username-Password-Authentication',
+          audience: "https://dev-xixaidu4.us.auth0.com/api/v2/");
       // Guardar el token de acceso
       await storage.write(key: 'access_token', value: result.accessToken);
       print('✅ Login successful - Token: ${result.accessToken}');
@@ -49,34 +48,28 @@ class AuthService {
   // Inicio de sesión con Google de forma nativa
   Future<String> loginWithGoogleNative() async {
     try {
-      // 🔴 Cierra la sesión anterior antes de iniciar una nueva
-      await _googleSignIn.signOut();
+      // 🔴 Cierra la sesión existente antes de iniciar una nueva
+      await _auth0.webAuthentication().logout();
 
-      // 1️⃣ Inicia sesión con Google nativo
-      final googleUser = await _googleSignIn.signIn();
-      if (googleUser == null) {
-        print('⚠️ Google sign-in cancelled by user');
-        return "cancelled";
-      }
+      // 1️⃣ Inicia sesión con Google a través de Auth0
+      final credentials = await _auth0.webAuthentication().login(
+        parameters: {
+          'connection':
+              'google', // Especifica que quieres usar Google como proveedor
+        },
+      );
 
-      final googleAuth = await googleUser.authentication;
-      final idToken = googleAuth.idToken;
+      // 2️⃣ Obtén el token de acceso
+      final accessToken = credentials.accessToken;
 
-      if (idToken == null) {
-        print('❌ Error: No se obtuvo el ID token de Google');
-        return "error: No se obtuvo el ID token de Google";
-      }
-
-      // 2️⃣ Realiza el intercambio del ID token de Google por un token de Auth0
-      final tokenResponse = await _exchangeGoogleTokenForAuth0Token(idToken);
-      if (tokenResponse.containsKey('access_token')) {
-        final accessToken = tokenResponse['access_token'];
+      if (accessToken != null) {
+        // Guarda el token de acceso en el almacenamiento seguro
         await storage.write(key: 'access_token', value: accessToken);
         print('✅ Google login successful - Token: $accessToken');
         return "success";
       } else {
-        print('❌ Google login failed - Response: ${tokenResponse.toString()}');
-        return "error: ${tokenResponse.toString()}";
+        print('❌ Google login failed - No access token received');
+        return "error: No access token received";
       }
     } catch (e) {
       print('❌ Error en loginWithGoogleNative: $e');
@@ -121,6 +114,7 @@ class AuthService {
   // Cerrar sesión
   Future<void> logout() async {
     try {
+      await _auth0.webAuthentication().logout();
       await _googleSignIn.signOut();
       await storage.deleteAll(); // Borra todos los tokens almacenados
       print('✅ Logout successful');
