@@ -234,6 +234,8 @@ services:
   grpc-server:
     # image: my-grpc-server-image
     # container_name: grpc-server
+    environment:
+      - SERVER_NAME=postgres
     build:
       context: ./grpc-service/GrpcService/GrpcService/
       dockerfile: Dockerfile

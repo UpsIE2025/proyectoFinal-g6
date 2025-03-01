@@ -4,10 +4,15 @@ using GrpcService.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var serverName = Environment.GetEnvironmentVariable("SERVER_NAME") ?? "209.94.59.49";
+
+Console.WriteLine($"ServerName={serverName}");
 
 builder.Services.AddGrpc();
 
-var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
+var connectionString = $"Host={serverName};Database=mydatabase;Username=admindatabase;Password=admindatabase";
+
+//var connectionString = builder.Configuration.GetConnectionString("PostgresConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
