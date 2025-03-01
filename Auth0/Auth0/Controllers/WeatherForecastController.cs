@@ -65,7 +65,7 @@ namespace Auth0.Controllers
                 Encoding.UTF8,
                 "application/json"
             );
-            var response = await httpClient.PostAsync(domain, jsonContent);
+            var response = await httpClient.PostAsync($"{domain}oauth/token", jsonContent);
 
             if (!response.IsSuccessStatusCode)
             {

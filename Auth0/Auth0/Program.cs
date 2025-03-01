@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Net;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,7 @@ builder.Services.AddAuthentication(options =>
 {
     options.TokenValidationParameters = new TokenValidationParameters
     {
-        ValidIssuer = builder.Configuration["Auth0:URL"],
+        ValidIssuer = builder.Configuration["Auth0:Domain"],
         ValidAudience = builder.Configuration["Auth0:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("B3S4nBN07QXweCXxZHdkr70DsgJFZTmi"))
     };
@@ -54,21 +55,13 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
->>>>>>> 08f45cbc499549170df91324c0fad5530af361c5
 var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT") ?? "8081";
 
 builder.WebHost.ConfigureKestrel(options =>
 {
     options.Listen(IPAddress.Any, int.Parse(port));
 });
-<<<<<<< HEAD
->>>>>>> 7d35e52fb1a6d85634b4f75a99c52953325f711d
-=======
->>>>>>> 08f45cbc499549170df91324c0fad5530af361c5
+
 
 builder.Services.AddHttpClient();
 var app = builder.Build();
