@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   kong:
     image: kong:latest
@@ -146,7 +145,7 @@ services:
       - KAFKA_INTER_BROKER_LISTENER_NAME=INTERNAL
       - KAFKA_LISTENERS=INTERNAL://0.0.0.0:9094,EXTERNAL://0.0.0.0:9095
     depends_on:
-      - zookeeper
+      - zookeeper_cdc
     networks:
       - my-network
 
@@ -211,6 +210,54 @@ services:
       KAFKA: kafka_cdc
     networks:
       - my-network
+
+  graphql-server:
+    build:
+      context: ./graphql-server/
+      dockerfile: Dockerfile
+    container_name: graphql-server
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - GRPC_COURSE_URL=grpc-server:8080
+      - GRPC_STUDENT_URL=grpc-server:8080
+      - GRPC_STUDENT_COURSE_URL=grpc-server:8080
+      - REST_API_URL=http://kafka-producer:8090/api/kafka/send
+    depends_on:
+      - grpc-server
+    networks:
+      - my-network
+    volumes:
+      - .env:/app/.env
+
+  grpc-server:
+    # image: my-grpc-server-image
+    # container_name: grpc-server
+    build:
+      context: ./grpc-service/GrpcService/GrpcService/
+      dockerfile: Dockerfile
+    container_name: grpc-server
+    restart: always
+    ports:
+      - "8080:8080"
+    networks:
+      - my-network
+  
+  app:
+    build:
+      context: ./msoft_app/app  
+      dockerfile: Dockerfile
+    ports:
+      - "8089:3000"   
+    environment:
+      - VITE_AUTH0_DOMAIN=dev-xixaidu4.us.auth0.com
+      - VITE_APP_AUTH0_CLIENT_ID=BSTpScSwngSGgrm7NvRU0oLmtz9TmtEA
+      - VITE_APP_AUTH0_AUDIENCE=https://dev-xixaidu4.us.auth0.com/api/v2
+      - VITE_APP_GRAPHQL_URI=http://localhost:4000/graphql      
+    volumes:
+      - ./msoft_app/app:/app    
+      - /msoft_app/app/node_modules
       
 networks:
   my-network:
