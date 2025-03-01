@@ -8,6 +8,7 @@ import client from "./graphql/client";
 import { ApolloProvider } from "@apollo/client";
 import Estudiantes from "./pages/Estudiantes";
 import Matriculas from "./pages/Matriculas";
+import PrivateRoute from "./components/PrivateRoute";
 // Importa otras páginas según sea necesario
 
 function App() {
@@ -27,9 +28,20 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            <Route path="cursos" element={<Cursos />} />
-            <Route path="estudiantes" element={<Estudiantes />} />
-            <Route path="matriculas/:ID_Estudiante" element={<Matriculas />} />
+            <Route
+              path="cursos"
+              element={<PrivateRoute element={<Cursos />} />}
+            />
+
+            <Route
+              path="estudiantes"
+              element={<PrivateRoute element={<Estudiantes />} />}
+            />
+
+            <Route
+              path="matriculas/:ID_Estudiante"
+              element={<PrivateRoute element={<Matriculas />} />}
+            />
           </Route>
         </Routes>
       </ApolloProvider>

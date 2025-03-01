@@ -213,7 +213,6 @@ const resolvers = {
 
     // Matricular un estudiante en un curso
     matricularEstudiante: async (_, { EstudianteID, CursoID }) => {
-      console.log(EstudianteID, CursoID);
       const query = `
         INSERT INTO Estudiante_Curso ("estudianteId", "cursoId", estado)
         VALUES ($1, $2, true)

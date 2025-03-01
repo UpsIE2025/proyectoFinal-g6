@@ -15,6 +15,9 @@ const Auth0ProviderWithHistory = ({ children }) => {
             clientId={process.env.REACT_APP_AUTH0_CLIENT_ID}
             redirectUri={window.location.origin}
             onRedirectCallback={onRedirectCallback}
+            authorizationParams={{
+                redirect_uri: window.location.origin,
+            }}
         >
             {children}
         </Auth0Provider>

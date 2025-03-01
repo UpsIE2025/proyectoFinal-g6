@@ -9,7 +9,9 @@ const Layout = () => {
     <div className="bg-white flex flex-col min-h-screen bg-gray-100">
       <nav className="w-full bg-gray-800 p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <h1 className="text-white text-2xl font-bold">my-app</h1>
+          <a href="/" className="text-white text-2xl font-bold">
+            my-app
+          </a>
           <div className="flex items-center">
             <a href="/cursos" className="text-white mr-4">
               Cursos

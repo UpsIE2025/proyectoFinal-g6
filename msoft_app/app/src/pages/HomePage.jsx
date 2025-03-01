@@ -10,9 +10,12 @@ const HomePage = () => {
         <p className="text-xl mb-8">
           Esta es la página de inicio. Disfruta de la experiencia.
         </p>
-        <button className="px-6 py-3 bg-teal-600 rounded-lg text-lg font-semibold shadow-md hover:bg-teal-700 transition duration-300">
-          Comienza Ahora
-        </button>
+        <a
+          href="/cursos"
+          className="px-6 py-3 bg-teal-600 rounded-lg text-lg font-semibold shadow-md hover:bg-teal-700 transition duration-300"
+        >
+          Ver cursos
+        </a>
       </div>
     </div>
   );
