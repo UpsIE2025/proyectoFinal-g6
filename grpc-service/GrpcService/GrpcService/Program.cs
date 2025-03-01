@@ -32,9 +32,9 @@ using (var scope = app.Services.CreateScope())
         context.Database.Migrate();
         Console.WriteLine($"Migraciones aplicadas.");
     }
-    catch (Exception ex)
+    catch
     {
-        Console.WriteLine($"Error al aplicar migraciones: {ex.Message}");
+        Console.WriteLine($"No se aplicaron migraciones.");
     }
 }
 
