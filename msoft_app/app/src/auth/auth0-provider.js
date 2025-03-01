@@ -17,6 +17,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
             onRedirectCallback={onRedirectCallback}
             authorizationParams={{
                 redirect_uri: window.location.origin,
+                audience: "https://dev-xixaidu4.us.auth0.com/userinfo",
             }}
         >
             {children}

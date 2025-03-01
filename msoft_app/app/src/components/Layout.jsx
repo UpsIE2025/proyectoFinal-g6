@@ -1,10 +1,52 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Outlet } from "react-router-dom";
 
 const Layout = () => {
-  const { loginWithRedirect, logout, user, isAuthenticated } = useAuth0();
+  const {
+    loginWithRedirect,
+    logout,
+    user,
+    isAuthenticated,
+    getAccessTokenSilently,
+  } = useAuth0();
+  const [token, setToken] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (isAuthenticated) {
+        try {
+          const accessToken = await getAccessTokenSilently({});
 
+          setToken(accessToken);
+
+          const response = await fetch(
+            "https://dev-xixaidu4.us.auth0.com/userinfo",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          if (!response.ok) {
+            throw new Error("Error fetching user info");
+          }
+
+          const data = await response.json();
+          setUserInfo(data);
+          console.log(userInfo);
+        } catch (error) {
+          console.error("Error fetching the access token:", error);
+        }
+      }
+    };
+
+    fetchToken();
+  }, [isAuthenticated, getAccessTokenSilently]);
+
+  console.log(token);
   return (
     <div className="bg-white flex flex-col min-h-screen bg-gray-100">
       <nav className="w-full bg-gray-800 p-4">
