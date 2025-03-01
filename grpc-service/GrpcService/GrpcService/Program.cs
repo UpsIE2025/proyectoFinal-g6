@@ -13,15 +13,30 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(connectionString));
 
 builder.Services.AddScoped<IEstudianteCursoRepository, EstudianteCursoRepository>();
-builder.Services.AddScoped<EstudianteCursoService>();
 
 builder.Services.AddScoped<ICursoRepository, CursoRepository>();
-builder.Services.AddScoped<CursoService>();
 
 builder.Services.AddScoped<IEstudianteRepository, EstudianteRepository>();
-builder.Services.AddScoped<EstudianteService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    context.Database.EnsureCreated();
+
+    try
+    {
+        context.Database.Migrate();
+        Console.WriteLine($"Migraciones aplicadas.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error al aplicar migraciones: {ex.Message}");
+    }
+}
 
 app.MapGrpcService<EstudianteCursoService>();
 app.MapGrpcService<CursoService>();
