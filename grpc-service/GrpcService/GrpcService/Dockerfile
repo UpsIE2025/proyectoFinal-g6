@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-# No uses USER aquí a menos que definas APP_UID y crees el usuario.  Si no lo haces, se ejecutará como root.
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -12,7 +11,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /app
 
 # Copia SOLO el archivo .csproj
-COPY GrpcService.csproj ./
+COPY ./GrpcService.csproj ./
 
 # Restaura las dependencias
 RUN dotnet restore
