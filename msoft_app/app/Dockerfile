@@ -1,5 +1,5 @@
 # Usar una imagen base de Node.js
-FROM node:16-alpine
+FROM node:18-alpine
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -7,11 +7,14 @@ WORKDIR /app
 # Copiar el package.json y el package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias
+# Instalar TODAS las dependencias (incluyendo devDependencies)
 RUN npm install
 
 # Copiar el resto de la aplicación
 COPY . .
+
+# Verificar que Vite esté instalado
+RUN npm list vite || npm install -g vite
 
 # Construir la aplicación
 RUN npm run build
@@ -23,4 +26,4 @@ RUN npm install -g serve
 EXPOSE 5000
 
 # Comando para ejecutar la aplicación
-CMD ["serve", "-s", "build", "-l", "5000"]
+CMD ["serve", "-s", "dist", "-l", "5000"]
