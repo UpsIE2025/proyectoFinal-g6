@@ -39,7 +39,7 @@ Este proyecto implementa un servidor **GraphQL** en **NestJS** que consume servi
 ### 1️⃣ Clonar el repositorio
 
 ```sh
-git clone https://github.com/tu-repo/graphql-server.git
+git clone https://github.com/UpsIE2025/proyectoFinal-g6.git
 cd graphql-server
 ```
 
