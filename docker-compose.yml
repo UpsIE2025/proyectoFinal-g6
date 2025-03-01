@@ -116,7 +116,7 @@ services:
     ports:
       - "4000:4000"
     environment:
-      DB_HOST: 209.94.59.49
+      DB_HOST: postgres
       DB_USER: admindatabase
       DB_PASSWORD: admindatabase
       DB_NAME: mydatabase
