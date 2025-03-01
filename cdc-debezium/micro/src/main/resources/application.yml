@@ -1,0 +1,25 @@
+server:
+  port: 8084
+spring:
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:mydatabase}
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:admin}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  sql:
+    init:
+      mode: never
+  kafka:
+    bootstrap-servers: ${KAFKA:localhost}:9095
+  consumer:
+    group-id: my-group
+    auto-offset-reset: earliest
+    enable-auto-commit: true
+    key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
