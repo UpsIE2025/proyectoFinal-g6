@@ -89,6 +89,24 @@ services:
     networks:
       - my-network
 
+  auth-api:
+    build:
+      context: ./Auth0
+      dockerfile: Dockerfile
+    container_name: auth0
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - Auth0__Domain=https://dev-q7eednrlae4yxvel.us.auth0.com/
+      - Auth0__Audience=https://auth0APIKevin
+      - Auth0__client_id=Dcqawg99cWzahtkyavoY5nC3uq35aUDt
+      - Auth0__client_secret =60YCBP0JzvzmJr2qAHkOiF2yGdDCsgyBqYj3dKEgrBLtBaHZunnchbVi7kIMaE7Z
+      - Auth0__grant_type=client_credentials
+      - Auth0__kafkaProductor=http://kafka-productor:8090/api/kafka/send
+      - ASPNETCORE_PORT=8082
+    ports:
+      - "8082:8082"
+    networks:
+      - my-network
   api-gateway:
     build: ./api_gateway/gateway
     ports:
@@ -100,7 +118,6 @@ services:
       DB_NAME: mydatabase
     networks:
       - my-network
-
 networks:
   my-network:
     driver: bridge
