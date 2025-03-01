@@ -10,9 +10,9 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - GRPC_COURSE_URL=grpc-server:50051
-      - GRPC_STUDENT_URL=grpc-server:50051
-      - GRPC_STUDENT_COURSE_URL=grpc-server:50051
+      - GRPC_COURSE_URL=grpc-server:8080
+      - GRPC_STUDENT_URL=grpc-server:8080
+      - GRPC_STUDENT_COURSE_URL=grpc-server:8080
     depends_on:
       - grpc-server
     networks:
@@ -21,11 +21,15 @@ services:
       - .env:/app/.env
 
   grpc-server:
-    image: my-grpc-server-image
+    # image: my-grpc-server-image
+    # container_name: grpc-server
+    build:
+      context: ../grpc-service/GrpcService/GrpcService/
+      dockerfile: Dockerfile
     container_name: grpc-server
     restart: always
     ports:
-      - "50051:50051"
+      - "8000:8080"
     networks:
       - app-network
 
