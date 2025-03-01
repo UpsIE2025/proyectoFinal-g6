@@ -44,6 +44,51 @@
 				"description": "Generated from cURL: curl -i -X POST -H \"Accept:application/json\" -H  \"Content-Type:application/json\" http://localhost:8083/connectors/ -d @pg-source.json\r\n\r\n{\"name\":\"pg-source\",\"config\":{\"connector.class\":\"io.debezium.connector.postgresql.PostgresConnector\",\"tasks.max\":\"1\",\"database.hostname\":\"postgres\",\"database.port\":\"5432\",\"database.user\":\"postgres\",\"database.password\":\"postgres\",\"database.dbname\":\"postgres\",\"topic.prefix\":\"dbserver1\",\"schema.include.list\":\"inventory\",\"name\":\"pg-source\"},\"tasks\":[],\"type\":\"source\"}\r\n'"
 			},
 			"response": []
+		},
+		{
+			"name": "Check Kafka Connect Copy",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "localhost:8083/",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						""
+					]
+				},
+				"description": "Generated from cURL: curl -H \"Accept:application/json\" localhost:8083/\n{\"version\":\"3.3.1\",\"commit\":\"e23c59d00e687ff5\",\"kafka_cluster_id\":\"Z6t0i8sNT1W9-0eQ41gUPQ\"}"
+			},
+			"response": []
+		},
+		{
+			"name": "Check Connector Running Copy",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8083/connectors/pg-source/status",
+					"host": [
+						"localhost"
+					],
+					"port": "8083",
+					"path": [
+						"connectors",
+						"pg-source",
+						"status"
+					]
+				},
+				"description": "Generated from cURL: curl localhost:8083/connectors/pg-source/status\r\n{\"name\":\"pg-source\",\"connector\":{\"state\":\"RUNNING\",\"worker_id\":\"172.17.0.18:8083\"},\"tasks\":[{\"id\":0,\"state\":\"RUNNING\",\"worker_id\":\"172.17.0.18:8083\"}],\"type\":\"source\"}"
+			},
+			"response": []
 		}
 	]
 }

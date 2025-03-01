@@ -196,7 +196,7 @@ services:
       - my-network
 
   micro:
-    build: ./cdc/micro
+    build: ./cdc-debezium/micro
     container_name: micro
     ports:
       - "8084:8084"
@@ -208,6 +208,7 @@ services:
       DB_NAME: mydatabase
       DB_USER: admin
       DB_PASSWORD: admin
+      KAFKA: kafka_cdc
     networks:
       - my-network
       
