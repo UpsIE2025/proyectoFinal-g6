@@ -1,0 +1,32 @@
+services:
+  grpc-server:
+      environment:
+        - SERVER_NAME=postgres
+      build:
+        context: ./grpc-service/GrpcService/GrpcService/
+        dockerfile: Dockerfile
+      container_name: grpc-server
+      restart: always
+      ports:
+        - "8080:8080"
+      networks:
+        - my-network
+      depends_on:
+        - postgres
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=admindatabase
+      - POSTGRES_PASSWORD=admindatabase
+      - POSTGRES_DB=mydatabase
+    command: [ "postgres", "-c", "wal_level=logical" ]
+    networks:
+      - my-network
+      
+networks:
+  my-network:
+    driver: bridge
