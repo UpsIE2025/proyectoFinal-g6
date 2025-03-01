@@ -42,6 +42,7 @@ namespace Auth0.Controllers
             .ToArray();
         }
 
+
         [HttpPost]
         public async Task<ActionResult> GenerarToken()
         {
@@ -78,6 +79,44 @@ namespace Auth0.Controllers
 
             return Ok(tokenResponse);
         }
+        [Authorize]
+        [HttpPost("Kafka")]
+        public async Task<IActionResult> Post()
+        {
+            var codigo = "001";
+            var estado = "Activo";
+            var nombres = "Juan";
+            var apellidos = "perez";
+            var direccion = "asdasd";
+            var url = _configuration["Auth0:kafkaProductor"];
 
+            var httpClient = _httpClientFactory.CreateClient();
+            var requestBody = new
+            {
+                codigo = codigo,
+                estado = estado,
+                nombres = nombres,
+                apellidos = apellidos,
+                direccion = direccion,
+            };
+
+            var jsonContent = new StringContent(
+                JsonSerializer.Serialize(requestBody),
+                Encoding.UTF8,
+                "application/json"
+            );
+
+            var response = await httpClient.PostAsync(url, jsonContent);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                return StatusCode((int)response.StatusCode, errorContent);
+            }
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            var tResponse = JsonSerializer.Deserialize<ResponseKafka>(responseContent);
+            return Ok(tResponse);
+        }
     }
 }

@@ -101,6 +101,7 @@ services:
       - Auth0__client_id=Dcqawg99cWzahtkyavoY5nC3uq35aUDt
       - Auth0__client_secret =60YCBP0JzvzmJr2qAHkOiF2yGdDCsgyBqYj3dKEgrBLtBaHZunnchbVi7kIMaE7Z
       - Auth0__grant_type=client_credentials
+      - Auth0__kafkaProductor=http://kafka-productor:8090/api/kafka/send
       - ASPNETCORE_PORT=8082
     ports:
       - "8082:8082"
@@ -116,7 +117,7 @@ services:
       DB_PASSWORD: admindatabase
       DB_NAME: mydatabase
     networks:
-      - my-network  
+      - my-network
 networks:
   my-network:
     driver: bridge
