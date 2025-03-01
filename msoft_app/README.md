@@ -86,7 +86,7 @@ services:
       context: ./app
       dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - "80:3000"
     env_file:
       - ./app/.env
     volumes:
