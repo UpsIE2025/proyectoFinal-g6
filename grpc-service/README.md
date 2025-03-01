@@ -2,7 +2,7 @@
 
 ## 📌 Descripción
 
-Este microservicio implementa un servidor **gRPC** en .Net 8.
+Este microservicio implementa un servicio **gRPC** en .Net 8.
 
 ## 🚀 Requerimientos
 - .Net 8
@@ -31,7 +31,7 @@ Este microservicio implementa un servidor **gRPC** en .Net 8.
 
 ```sh
 git clone https://github.com/UpsIE2025/proyectoFinal-g6.git
-**`cd` grpc-service/GrpcService
+cd grpc-service/GrpcService
 ```
 
 ### 2️⃣ Instalación de Dependencias
