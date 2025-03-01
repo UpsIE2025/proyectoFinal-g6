@@ -3,12 +3,12 @@ services:
       environment:
         - SERVER_NAME=postgres
       build:
-        context: ./grpc-service/GrpcService/GrpcService/
+        context: ./
         dockerfile: Dockerfile
       container_name: grpc-server
       restart: always
       ports:
-        - "8080:8080"
+        - "8084:8080"
       networks:
         - my-network
       depends_on:
