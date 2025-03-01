@@ -7,8 +7,8 @@ import { CourseModule } from './services/course/course.module';
 import { StudentModule } from './services/student/student.module';
 import { StudentCourseModule } from './services/student-course/student-course.module';
 import { ConfigModule } from '@nestjs/config';
-
-
+import { RestClientModule } from './modules/rest-client/rest-client.module';
+import { RestClientResolver } from './modules/rest-client/rest-client.resolver';
 @Module({
   imports: [
     // Cargar variables de entorno
@@ -30,6 +30,8 @@ import { ConfigModule } from '@nestjs/config';
     CourseModule,
     StudentModule,
     StudentCourseModule,
+    RestClientModule,
   ],
+  providers: [RestClientResolver],
 })
 export class AppModule {}

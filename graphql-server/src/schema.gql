@@ -25,6 +25,14 @@ type StudentCourse {
   estado: Boolean!
 }
 
+type StudentModel {
+  codigo: String!
+  estado: String!
+  nombres: String!
+  apellidos: String!
+  direccion: String!
+}
+
 type Query {
   getCourses: [Course!]!
   getCourse(id: Float!): Course
@@ -32,4 +40,16 @@ type Query {
   getStudent(id: Float!): Student
   getStudentCourses: [StudentCourse!]!
   getStudentCourse(id: Float!): StudentCourse
+}
+
+type Mutation {
+  sendStudentData(student: StudentInput!): StudentModel!
+}
+
+input StudentInput {
+  codigo: String!
+  estado: String!
+  nombres: String!
+  apellidos: String!
+  direccion: String!
 }
