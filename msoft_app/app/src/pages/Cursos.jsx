@@ -146,7 +146,7 @@ const Cursos = () => {
               </div>
               <div className="mb-4">
                 <label className="block text-gray-700 font-medium mb-2">
-                  Estado
+                  Estado{" "}
                 </label>
                 <select
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"

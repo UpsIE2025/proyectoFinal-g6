@@ -11,10 +11,10 @@ const Layout = () => {
         <div className="container mx-auto flex justify-between items-center">
           <h1 className="text-white text-2xl font-bold">my-app</h1>
           <div className="flex items-center">
-            <a href="/" className="text-white mr-4">
+            <a href="/cursos" className="text-white mr-4">
               Cursos
             </a>
-            <a href="/about" className="text-white mr-4">
+            <a href="/estudiantes" className="text-white mr-4">
               Estudiantes
             </a>
 

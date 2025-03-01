@@ -87,11 +87,7 @@ const Estudiantes = () => {
 
   return (
     <div className="container mx-auto p-4 space-y-6">
-      <h1 className="text-3xl font-semibold text-gray-800 text-center">
-        Gestión de Estudiantes
-      </h1>
-
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-10">
         <button
           className="px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-lg hover:bg-indigo-700 transition duration-300"
           onClick={() => handleOpenModal(null)}
@@ -101,8 +97,8 @@ const Estudiantes = () => {
       </div>
 
       <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
-        <table className="min-w-full bg-white border-separate border-spacing-0">
-          <thead className="bg-indigo-600 text-white">
+        <table className="min-w-full bg-white border-spacing-0">
+          <thead className="bg-black text-white">
             <tr>
               <th className="py-3 px-4 text-left">Nombre</th>
               <th className="py-3 px-4 text-left">Apellido</th>
