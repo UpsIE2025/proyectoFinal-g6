@@ -2,7 +2,9 @@ version: '3.8'
 
 services:
   graphql-server:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: graphql-server
     restart: always
     ports:
