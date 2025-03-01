@@ -34,7 +34,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"No se aplicaron migraciones: {ex.Message}");
+        Console.WriteLine($"Info: No se aplicaron migraciones: {ex.Message}");
     }
 }
 
