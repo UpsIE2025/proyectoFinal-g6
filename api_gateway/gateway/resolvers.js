@@ -10,160 +10,239 @@ const pool = new Pool({
 
 const resolvers = {
   Query: {
-    // Obtener un estudiante por su código
-    estudiante: async (_, { Codigo }) => {
-      const query = "SELECT * FROM Estudiante WHERE Codigo = $1";
-      const { rows } = await pool.query(query, [Codigo]);
-      return rows[0];
+    // Obtener un estudiante por su ID
+    estudiante: async (_, { ID }) => {
+      const query = "SELECT * FROM Estudiante WHERE ID = $1";
+      const { rows } = await pool.query(query, [ID]);
+      const estudiante = rows[0];
+      return {
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      };
     },
 
     // Obtener todos los estudiantes
     estudiantes: async () => {
       const query = "SELECT * FROM Estudiante";
       const { rows } = await pool.query(query);
-      return rows;
+      return rows.map(estudiante => ({
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      }));
     },
 
-    // Obtener un curso por su código
-    curso: async (_, { Codigo }) => {
-      const query = "SELECT * FROM Cursos WHERE Codigo = $1";
-      const { rows } = await pool.query(query, [Codigo]);
-      return rows[0];
+    // Obtener un curso por su ID
+    curso: async (_, { ID }) => {
+      const query = "SELECT * FROM Curso WHERE ID = $1";
+      const { rows } = await pool.query(query, [ID]);
+      const curso = rows[0];
+      return {
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      };
     },
 
     // Obtener todos los cursos
     cursos: async () => {
-      const query = "SELECT * FROM Cursos";
+      const query = "SELECT * FROM Curso";
       const { rows } = await pool.query(query);
-      return rows;
+      return rows.map(curso => ({
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      }));
     },
 
     // Obtener los cursos de un estudiante
-    cursosPorEstudiante: async (_, { Codigo_Estudiante }) => {
+    cursosPorEstudiante: async (_, { ID_Estudiante }) => {
       const query = `
         SELECT c.* 
-        FROM Cursos c
-        JOIN Estudiante_Curso ec ON c.Codigo = ec.Codigo_Curso
-        WHERE ec.Codigo_Estudiante = $1
+        FROM Curso c
+        JOIN Estudiante_Curso ec ON c.ID = ec."cursoId" 
+        WHERE ec."estudianteId" = $1
       `;
-      const { rows } = await pool.query(query, [Codigo_Estudiante]);
-      return rows;
+      const { rows } = await pool.query(query, [ID_Estudiante]);
+      return rows.map(curso => ({
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      }));
     },
 
     // Obtener los estudiantes de un curso
-    estudiantesPorCurso: async (_, { Codigo_Curso }) => {
+    estudiantesPorCurso: async (_, { ID_Curso }) => {
       const query = `
         SELECT e.* 
         FROM Estudiante e
-        JOIN Estudiante_Curso ec ON e.Codigo = ec.Codigo_Estudiante
-        WHERE ec.Codigo_Curso = $1
+        JOIN Estudiante_Curso ec ON e.ID = ec.estudianteId
+        WHERE ec.cursoId = $1
       `;
-      const { rows } = await pool.query(query, [Codigo_Curso]);
-      return rows;
+      const { rows } = await pool.query(query, [ID_Curso]);
+      return rows.map(estudiante => ({
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      }));
     },
   },
 
   Mutation: {
     // Crear un nuevo estudiante
-    crearEstudiante: async (_, { Estado, Nombres, Apellidos, Direccion }) => {
-      const query = `
-        INSERT INTO Estudiante (Estado, Nombres, Apellidos, Direccion)
+    crearEstudiante: async (_, { Estado, Nombre, Apellido, Direccion }) => {
+      try {
+        const query = `
+        INSERT INTO Estudiante (Estado, Nombre, Apellido, Direccion)
         VALUES ($1, $2, $3, $4)
         RETURNING *
       `;
-      const { rows } = await pool.query(query, [
-        Estado,
-        Nombres,
-        Apellidos,
-        Direccion,
-      ]);
-      return rows[0];
+        const { rows } = await pool.query(query, [
+          Estado,
+          Nombre,
+          Apellido,
+          Direccion,
+        ]);
+        const estudiante = rows[0];
+        return {
+          ID: estudiante.id,
+          Estado: estudiante.estado,
+          Nombre: estudiante.nombre,
+          Apellido: estudiante.apellido,
+          Direccion: estudiante.direccion,
+        };
+      } catch (error) {
+        console.error("Error creating student:", error);
+        throw new Error("Failed to create student");
+      }
     },
 
     // Actualizar un estudiante existente
     actualizarEstudiante: async (
       _,
-      { Codigo, Estado, Nombres, Apellidos, Direccion }
+      { ID, Estado, Nombre, Apellido, Direccion }
     ) => {
       const query = `
         UPDATE Estudiante
-        SET Estado = $1, Nombres = $2, Apellidos = $3, Direccion = $4
-        WHERE Codigo = $5
+        SET Estado = $1, Nombre = $2, Apellido = $3, Direccion = $4
+        WHERE ID = $5
         RETURNING *
       `;
       const { rows } = await pool.query(query, [
         Estado,
-        Nombres,
-        Apellidos,
+        Nombre,
+        Apellido,
         Direccion,
-        Codigo,
+        ID,
       ]);
-      return rows[0];
+      const estudiante = rows[0];
+      return {
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      };
     },
 
     // Eliminar un estudiante
-    eliminarEstudiante: async (_, { Codigo }) => {
-      const query = "DELETE FROM Estudiante WHERE Codigo = $1 RETURNING *";
-      const { rows } = await pool.query(query, [Codigo]);
-      return rows[0];
+    eliminarEstudiante: async (_, { ID }) => {
+      const query = "DELETE FROM Estudiante WHERE ID = $1 RETURNING *";
+      const { rows } = await pool.query(query, [ID]);
+      const estudiante = rows[0];
+      return {
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      };
     },
 
     // Crear un nuevo curso
     crearCurso: async (_, { Estado, Nombre }) => {
       const query = `
-        INSERT INTO Cursos (Estado, Nombre)
+        INSERT INTO Curso (Estado, Nombre)
         VALUES ($1, $2)
         RETURNING *
       `;
       const { rows } = await pool.query(query, [Estado, Nombre]);
-      return rows[0];
+      const curso = rows[0];
+      return {
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      };
     },
 
     // Actualizar un curso existente
-    actualizarCurso: async (_, { Codigo, Estado, Nombre }) => {
+    actualizarCurso: async (_, { ID, Estado, Nombre }) => {
       const query = `
-        UPDATE Cursos
+        UPDATE Curso
         SET Estado = $1, Nombre = $2
-        WHERE Codigo = $3
+        WHERE ID = $3
         RETURNING *
       `;
-      const { rows } = await pool.query(query, [Estado, Nombre, Codigo]);
-      return rows[0];
+      const { rows } = await pool.query(query, [Estado, Nombre, ID]);
+      const curso = rows[0];
+      return {
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      };
     },
 
     // Eliminar un curso
-    eliminarCurso: async (_, { Codigo }) => {
-      const query = "DELETE FROM Cursos WHERE Codigo = $1 RETURNING *";
-      const { rows } = await pool.query(query, [Codigo]);
-      return rows[0];
+    eliminarCurso: async (_, { ID }) => {
+      const query = "DELETE FROM Curso WHERE ID = $1 RETURNING *";
+      const { rows } = await pool.query(query, [ID]);
+      const curso = rows[0];
+      return {
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      };
     },
 
     // Matricular un estudiante en un curso
-    matricularEstudiante: async (_, { Codigo_Estudiante, Codigo_Curso }) => {
+    matricularEstudiante: async (_, { EstudianteID, CursoID }) => {
+      console.log(EstudianteID, CursoID);
       const query = `
-        INSERT INTO Estudiante_Curso (Codigo_Estudiante, Codigo_Curso)
-        VALUES ($1, $2)
+        INSERT INTO Estudiante_Curso ("estudianteId", "cursoId", estado)
+        VALUES ($1, $2, true)
         RETURNING *
       `;
       const { rows } = await pool.query(query, [
-        Codigo_Estudiante,
-        Codigo_Curso,
+        EstudianteID,
+        CursoID,
       ]);
-      return rows[0];
+      const estudianteCurso = rows[0];
+      return {
+        EstudianteID: estudianteCurso.estudianteId,
+        CursoID: estudianteCurso.cursoId,
+      };
     },
 
     // Desmatricular un estudiante de un curso
-    desmatricularEstudiante: async (_, { Codigo_Estudiante, Codigo_Curso }) => {
+    desmatricularEstudiante: async (_, { EstudianteID, CursoID }) => {
       const query = `
         DELETE FROM Estudiante_Curso
-        WHERE Codigo_Estudiante = $1 AND Codigo_Curso = $2
+        WHERE "estudianteId" = $1 AND "cursoId" = $2
         RETURNING *
       `;
       const { rows } = await pool.query(query, [
-        Codigo_Estudiante,
-        Codigo_Curso,
+        EstudianteID,
+        CursoID,
       ]);
-      return rows[0];
+      const estudianteCurso = rows[0];
+      return null;
     },
   },
 
@@ -172,12 +251,16 @@ const resolvers = {
     Cursos: async (parent) => {
       const query = `
         SELECT c.* 
-        FROM Cursos c
-        JOIN Estudiante_Curso ec ON c.Codigo = ec.Codigo_Curso
-        WHERE ec.Codigo_Estudiante = $1
+        FROM Curso c
+        JOIN Estudiante_Curso ec ON c.ID = ec.cursoId
+        WHERE ec.estudianteId = $1
       `;
-      const { rows } = await pool.query(query, [parent.Codigo]);
-      return rows;
+      const { rows } = await pool.query(query, [parent.ID]);
+      return rows.map(curso => ({
+        ID: curso.id,
+        Estado: curso.estado,
+        Nombre: curso.nombre,
+      }));
     },
   },
 
@@ -186,11 +269,17 @@ const resolvers = {
       const query = `
         SELECT e.* 
         FROM Estudiante e
-        JOIN Estudiante_Curso ec ON e.Codigo = ec.Codigo_Estudiante
-        WHERE ec.Codigo_Curso = $1
+        JOIN Estudiante_Curso ec ON e.ID = ec.estudianteId
+        WHERE ec.cursoId = $1
       `;
-      const { rows } = await pool.query(query, [parent.Codigo]);
-      return rows;
+      const { rows } = await pool.query(query, [parent.ID]);
+      return rows.map(estudiante => ({
+        ID: estudiante.id,
+        Estado: estudiante.estado,
+        Nombre: estudiante.nombre,
+        Apellido: estudiante.apellido,
+        Direccion: estudiante.direccion,
+      }));
     },
   },
 };

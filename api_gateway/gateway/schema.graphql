@@ -1,57 +1,53 @@
 type Estudiante {
-  Codigo: ID!
-  Estado: String!
-  Nombres: String!
-  Apellidos: String!
+  ID: ID!
+  Estado: Boolean!
+  Nombre: String!
+  Apellido: String!
   Direccion: String!
   Cursos: [Curso]
 }
 
 type Curso {
-  Codigo: ID!
-  Estado: String!
+  ID: ID!
+  Estado: Boolean!
   Nombre: String!
   Estudiantes: [Estudiante]
 }
 
 type Query {
-  estudiante(Codigo: ID!): Estudiante
+  estudiante(ID: ID!): Estudiante
   estudiantes: [Estudiante]
-  curso(Codigo: ID!): Curso
+  curso(ID: ID!): Curso
   cursos: [Curso]
-  cursosPorEstudiante(Codigo_Estudiante: ID!): [Curso]
-  estudiantesPorCurso(Codigo_Curso: ID!): [Estudiante]
+  cursosPorEstudiante(ID_Estudiante: ID!): [Curso]
+  estudiantesPorCurso(ID_Curso: ID!): [Estudiante]
 }
 
 type Mutation {
   crearEstudiante(
-    Estado: String!
-    Nombres: String!
-    Apellidos: String!
+    Estado: Boolean!
+    Nombre: String!
+    Apellido: String!
     Direccion: String!
   ): Estudiante
   actualizarEstudiante(
-    Codigo: ID!
-    Estado: String
-    Nombres: String
-    Apellidos: String
+    ID: ID!
+    Estado: Boolean
+    Nombre: String
+    Apellido: String
     Direccion: String
   ): Estudiante
-  eliminarEstudiante(Codigo: ID!): Estudiante
-  crearCurso(Estado: String!, Nombre: String!): Curso
-  actualizarCurso(Codigo: ID!, Estado: String, Nombre: String): Curso
-  eliminarCurso(Codigo: ID!): Curso
-  matricularEstudiante(
-    Codigo_Estudiante: ID!
-    Codigo_Curso: ID!
-  ): Estudiante_Curso
-  desmatricularEstudiante(
-    Codigo_Estudiante: ID!
-    Codigo_Curso: ID!
-  ): Estudiante_Curso
+  eliminarEstudiante(ID: ID!): Estudiante
+  crearCurso(Estado: Boolean!, Nombre: String!): Curso
+  actualizarCurso(ID: ID!, Estado: Boolean, Nombre: String): Curso
+  eliminarCurso(ID: ID!): Curso
+  matricularEstudiante(EstudianteID: ID!, CursoID: ID!): Estudiante_Curso
+  desmatricularEstudiante(EstudianteID: ID!, CursoID: ID!): Estudiante_Curso
 }
 
 type Estudiante_Curso {
-  Codigo_Estudiante: ID!
-  Codigo_Curso: ID!
+  ID: ID!
+  EstudianteID: ID!
+  CursoID: ID!
+  Estado: Boolean!
 }
